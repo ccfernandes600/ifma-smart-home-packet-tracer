@@ -16,6 +16,9 @@ Simulação de automação residencial com IoT, NAT, Frame Relay e SBC no Cisco 
 
 ## 2. Topologia de Rede
 
+![Topologia da Rede](topologia.png)
+
+
 ### LAN – 192.168.1.0/24
 
 | Dispositivo     | IP              | Função                          |
