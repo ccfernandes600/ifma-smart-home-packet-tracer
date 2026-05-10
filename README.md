@@ -180,6 +180,8 @@ PC0 (navegador) ──► SBC Proxy Web (192.168.1.50)
 ifma-smart-home-packet-tracer/
 ├── main.py                  # Código da SBC0 – lógica de segurança IoT
 ├── README.md                # Documentação técnica do projeto
+├── index_servidor_interno.html    # Portal do servidor interno (Packet Tracer)
+├── index_netlify.html              # Portal externo hospedado no Netlify
 └── LICENSE                  # Licença MIT
 ```
 
