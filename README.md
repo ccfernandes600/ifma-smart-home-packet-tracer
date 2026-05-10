@@ -315,5 +315,93 @@ def main():
         sleep(1)
 
 if __name__ == "__main__":
+
+
+---
+
+## 8. Uso de Inteligência Artificial no Desenvolvimento
+
+### 8.1 Ferramentas Utilizadas
+
+O desenvolvimento deste projeto foi realizado com o auxílio de múltiplas plataformas de IA generativa, cada uma contribuindo em diferentes etapas:
+
+#### Claude AI (versão básica)
+- **Etapa inicial**: Configuração completa da infraestrutura de rede
+- Implementação dos roteadores Router0 e Router1 com Frame Relay
+- Desenvolvimento das primeiras versões dos arquivos HTML (servidor interno e Netlify)
+- Iterações iniciais até o término do período de uso gratuito
+
+#### Perplexity Pro com Claude Sonnet 4.6 (modo pensamento)
+- **Etapa principal**: Continuação do projeto após migração do histórico do Claude
+- Desenvolvimento e refinamento da lógica de automação residencial
+- Múltiplas iterações de depuração do código Python
+- Resolução de problemas de compatibilidade com o Cisco Packet Tracer
+
+#### Google Gemini Pro
+- **Etapa de validação**: Análise e testes do código Python
+- Verificação da lógica antes da identificação do bug do Packet Tracer
+- Suporte na validação das soluções implementadas
+
+### 8.2 Desafios Técnicos Encontrados
+
+#### Configuração da WAN com Frame Relay
+
+**Problema**: As tecnologias Cable Modem e Modem DSL não funcionavam no Packet Tracer 9.0.0 (testado em Linux e Windows).
+
+**Solução**: Migração para portas seriais (Se0/3/0) nos roteadores configuradas com Frame Relay via Cloud-PT, que funcionou imediatamente.
+
+**Tempo investido**: Fase inicial de experimentação com modems.
+
+#### Bug nas Portas Analógicas da MCU
+
+**Problema crítico**: As diretivas `analogWrite()` e `analogRead()` não funcionavam quando:
+- MCU com porta analógica conectada a dispositivo com porta analógica
+- Configuração 100% analógica não respondia adequadamente
+
+**Iterações**: Dezenas de revisões do código Python antes de identificar que o problema era do simulador, não do código.
+
+**Solução definitiva**: 
+- Substituição da MCU pelo SBC0 (Single Board Computer)
+- Utilização apenas de portas digitais (D0-D9)
+- Sucesso imediato após a migração conforme topologia final
+
+**Tempo investido**: Aproximadamente 40% do tempo total do projeto foi dedicado à identificação e resolução deste bug do Packet Tracer.
+
+### 8.3 Fluxo de Trabalho com IA
+
+```
+1. [Claude AI Básico]
+   ├── Configuração de rede
+   ├── Roteadores e Frame Relay
+   └── Primeiras versões HTML
+        ↓
+2. [Perplexity + Claude Sonnet 4.6]
+   ├── Importação do histórico
+   ├── Desenvolvimento da automação
+   ├── Iterações de depuração (10+ versões)
+   └── Resolução do bug da MCU
+        ↓
+3. [Gemini Pro]
+   ├── Validação de código
+   ├── Análise de bugs
+   └── Testes de lógica
+        ↓
+4. [Resultado Final]
+   └── Sistema funcional com SBC0
+```
+
+### 8.4 Lições Aprendidas
+
+1. **Limitações do simulador**: Nem sempre o código está errado; bugs de software podem consumir tempo significativo de desenvolvimento.
+
+2. **Migração entre IAs**: A capacidade de importar histórico entre plataformas (Claude → Perplexity) foi essencial para continuidade do projeto.
+
+3. **Abordagem multi-IA**: Utilizar diferentes modelos (Claude, Gemini) para validação cruzada ajudou a identificar que o problema era externo ao código.
+
+4. **Documentação iterativa**: Registrar cada tentativa facilitou a identificação do padrão de falha nas conexões analógicas.
+
+5. **Persistência técnica**: 40% do tempo em debugging levou à descoberta de uma incompatibilidade importante do Packet Tracer 9.0.0 com portas analógicas.
+
+---
     main()
 ```
