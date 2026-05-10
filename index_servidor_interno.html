@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal IFMA - Automacao e Monitoramento</title>
+  <style>
+    :root {
+      --verde: #0b7a3b;
+      --verde-2: #1fa55b;
+      --verde-3: #dff5e8;
+      --vermelho: #c62828;
+      --preto: #101010;
+      --cinza: #f4f6f5;
+      --texto: #1a1a1a;
+      --borda: #cfe7d7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f7faf8 0%, #edf5f0 100%);
+      color: var(--texto);
+    }
+    .topbar {
+      background: var(--verde);
+      color: #fff;
+      padding: 18px 24px;
+      border-bottom: 6px solid var(--vermelho);
+    }
+    .topbar h1 { margin: 0; font-size: 30px; }
+    .topbar p { margin: 6px 0 0; font-size: 15px; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    .hero {
+      background: #fff;
+      border: 2px solid var(--borda);
+      border-left: 8px solid var(--verde);
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    }
+    .hero h2 { margin: 0 0 10px; color: var(--verde); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.05);
+    }
+    .card h3 { margin: 0 0 10px; color: var(--verde); }
+    .status {
+      display: inline-block;
+      background: var(--verde-3);
+      color: var(--verde);
+      border: 1px solid var(--verde-2);
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    .alerta {
+      background: #fff7f7;
+      border: 1px solid #f0c9c9;
+      border-left: 8px solid var(--vermelho);
+      padding: 16px;
+      margin-bottom: 22px;
+    }
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-bottom: 22px; }
+    th, td { border: 1px solid #d8e5dc; padding: 12px; text-align: left; font-size: 14px; }
+    th { background: #e8f4ec; color: var(--verde); }
+    .sec-title { margin: 0 0 12px; color: var(--verde); }
+    .flow {
+      background: #ffffff;
+      border: 1px solid var(--borda);
+      padding: 18px;
+      line-height: 2;
+      font-size: 16px;
+    }
+    .node {
+      display: inline-block;
+      padding: 8px 12px;
+      margin: 6px 4px;
+      border-radius: 8px;
+      border: 1px solid var(--borda);
+      background: #f6fbf8;
+      font-weight: bold;
+    }
+    .router { background: #eef8f1; border-color: #9fd0b1; }
+    .server { background: #eef8f1; border-color: #1fa55b; }
+    .nat    { background: #fff4f4; border-color: #e2aaaa; color: #8b1e1e; }
+    .footer { text-align: center; color: #445566; font-size: 13px; padding: 10px 0 30px; }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .wrap { padding: 14px; }
+      .topbar h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>IFMA Campus Monte Castelo</h1>
+  <p>Portal de controle e monitoramento da rede de automacao - acesso via NAT/WAN</p>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h2>Visao geral da arquitetura</h2>
+    <p>Esta pagina representa a topologia atual do ambiente de automacao no Packet Tracer,
+    com uma LAN local de automacao em <strong>192.168.1.0/24</strong>, comunicacao WAN entre
+    os roteadores e um unico servidor fisico localizado na rede <strong>10.0.0.0/24</strong>.</p>
+    <p><span class="status">Servidor fisico unico: 10.0.0.10</span></p>
+  </div>
+
+  <div class="alerta">
+    <strong>Atencao sobre o NAT:</strong> existe somente um servidor fisico, com IP real
+    <strong>10.0.0.10</strong>. O endereco <strong>200.0.0.10</strong> e apenas o IP publico
+    publicado pelo Router1 para acesso externo.
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>LAN de Automacao</h3>
+      <p><strong>Rede:</strong> 192.168.1.0/24</p>
+      <p><strong>Gateway:</strong> 192.168.1.1</p>
+      <p><strong>Dispositivos:</strong> PC0, SBC0, SBC Proxy</p>
+    </div>
+    <div class="card">
+      <h3>WAN (Nuvem)</h3>
+      <p><strong>Ligacao entre roteadores:</strong> 200.0.0.0</p>
+      <p><strong>R0:</strong> 200.0.0.1</p>
+      <p><strong>R1:</strong> 200.0.0.2</p>
+    </div>
+    <div class="card">
+      <h3>Rede do Servidor</h3>
+      <p><strong>Rede:</strong> 10.0.0.0/24</p>
+      <p><strong>Gateway:</strong> 10.0.0.1</p>
+      <p><strong>Servidor real:</strong> 10.0.0.10</p>
+    </div>
+  </div>
+
+  <h2 class="sec-title">Dispositivos da topologia atual</h2>
+  <table>
+    <tr><th>Dispositivo</th><th>IP</th><th>Funcao</th><th>Observacao</th></tr>
+    <tr><td>PC0</td><td>192.168.1.10</td><td>Cliente de acesso e testes</td><td>Usado para acessar o servidor publicado</td></tr>
+    <tr><td>SBC0 (IoT)</td><td>192.168.1.20</td><td>Controlador IoT</td><td>Sensores, LED RGB, LCD, Sirene, Camera</td></tr>
+    <tr><td>SBC Proxy Web</td><td>192.168.1.50</td><td>Proxy HTTP interno</td><td>Busca portal Netlify e entrega ao PC0</td></tr>
+    <tr><td>Server-PT</td><td>10.0.0.10</td><td>Servidor fisico unico</td><td>Publicado externamente como 200.0.0.10</td></tr>
+  </table>
+
+  <h2 class="sec-title">Roteadores</h2>
+  <table>
+    <tr><th>Roteador</th><th>Interface / IP</th><th>Papel</th></tr>
+    <tr><td>Router0</td><td>LAN 192.168.1.1 / WAN 200.0.0.1</td><td>Gateway da automacao e saida para a nuvem</td></tr>
+    <tr><td>Router1</td><td>WAN 200.0.0.2 / LAN 10.0.0.1</td><td>Gateway da rede do servidor e responsavel pelo NAT publico</td></tr>
+  </table>
+
+  <h2 class="sec-title">Fluxo logico NAT/WAN</h2>
+  <div class="flow">
+    <span class="node">PC0 192.168.1.10</span>
+    &rarr;
+    <span class="node">SBC Proxy 192.168.1.50</span>
+    &rarr;
+    <span class="node router">Router0 192.168.1.1 / 200.0.0.1</span>
+    &rarr;
+    <span class="node">Cloud WAN (Frame Relay)</span>
+    &rarr;
+    <span class="node router">Router1 200.0.0.2 / 10.0.0.1</span>
+    &rarr;
+    <span class="node server">Servidor real 10.0.0.10</span>
+    <br><br>
+    <span class="node nat">Acesso publico apresentado ao usuario: 200.0.0.10 (NAT no Router1)</span>
+  </div>
+
+  <div class="footer">
+    IFMA Campus Monte Castelo - Monitoramento e controle integrado dos dispositivos IoT da rede de automacao.
+  </div>
+
+</div>
+</body>
+</html>
