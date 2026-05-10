@@ -145,7 +145,36 @@ Sensor muda de estado
 
 ---
 
-## 5.3 Portal Web – Dois Servidores em Paralelo  O projeto conta com **dois servidores web operando simultaneamente**, acessíveis a partir do PC0:  #### Servidor 1 – Interno (Packet Tracer)  - Hospedado no **Server0** (`10.0.0.10`), dentro da rede simulada. - Acessível via IP público `200.0.0.10` através de NAT estático 1:1 no Router1. - Contém a página `index.html` com informações do projeto rodando dentro do Packet Tracer.  #### Servidor 2 – Externo (Netlify via SBC Proxy Web)  - Portal hospedado na internet: **https://ifma-automacao-packet-tracer.netlify.app/** - Acessível a partir do PC0 via **`192.168.1.50`** (IP do SBC Proxy Web) ou pelo nome de domínio **`ifma-automacao-packet-tracer.netlify.app`** resolvido pelo DNS do Server0. - O **SBC Proxy Web** (`192.168.1.50`) age como intermediário: recebe a requisição HTTP do PC0, busca o `index.html` remoto na internet (Netlify) e retorna o conteúdo ao navegador local do PC0. - Dessa forma, o usuário dentro da rede simulada acessa um portal real hospedado na internet, sem que o PC0 precise de acesso direto à internet.  #### Fluxo do acesso via Proxy  ``` PC0 (navegador)   └─► SBC Proxy Web (192.168.1.50)         └─► Internet               └─► Netlify (ifma-automacao-packet-tracer.netlify.app)                     └─► index.html retornado ao PC0 via proxy ```  ---  ## 6. Estrutura do Repositório
+### 5.3 Portal Web – Dois Servidores em Paralelo
+
+O projeto conta com dois servidores web operando simultaneamente, acessíveis a partir do PC0:
+
+#### Servidor 1 – Interno (Packet Tracer)
+
+- Hospedado no Server0 (`10.0.0.10`), dentro da rede simulada.
+- Acessível via IP público `200.0.0.10` através de NAT estático 1:1 no Router1.
+- Contém a página `index.html` com informações do projeto rodando dentro do Packet Tracer.
+
+#### Servidor 2 – Externo (Netlify via SBC Proxy Web)
+
+- Portal hospedado na internet: https://ifma-automacao-packet-tracer.netlify.app/
+- Acessível a partir do PC0 via `192.168.1.50` (IP do SBC Proxy Web) ou pelo nome de domínio `ifma-automacao-packet-tracer.netlify.app` resolvido pelo DNS do Server0.
+- O SBC Proxy Web (`192.168.1.50`) age como intermediário: recebe a requisição HTTP do PC0, busca o `index.html` remoto na internet (Netlify) e retorna o conteúdo ao navegador local do PC0.
+- Dessa forma, o usuário dentro da rede simulada acessa um portal real hospedado na internet, sem que o PC0 precise de acesso direto à internet.
+
+#### Fluxo do acesso via Proxy
+
+```
+PC0 (navegador) ──► SBC Proxy Web (192.168.1.50)
+                      └──► Internet
+                             └──► Netlify (ifma-automacao-packet-tracer.netlify.app)
+                                    └──► index.html
+                                           retornado ao PC0 via proxy
+```
+
+---
+
+## 6. Estrutura do Repositório
 
 ```
 ifma-smart-home-packet-tracer/
