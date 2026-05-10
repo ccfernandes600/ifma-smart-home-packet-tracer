@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFMA — Sistema de Automação | Campus Monte Castelo</title>
+<meta name="description" content="Sistema de monitoramento da rede de automação IoT do IFMA Campus Monte Castelo.">
+<meta property="og:title" content="IFMA — Sistema de Automação | Campus Monte Castelo">
+<meta property="og:url" content="https://ifma-automacao-packet-tracer.netlify.app/">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde:      #2E7D32;
+    --verde-c:    #43A047;
+    --verde-n:    #66BB6A;
+    --vermelho:   #C62828;
+    --verm-ac:    #EF5350;
+    --laranja:    #E65100;
+    --laranja-ac: #FF6D00;
+    --azul:       #29B6F6;
+    --amarelo:    #FDD835;
+    --preto:      #0A0A0A;
+    --cz-esc:     #111714;
+    --cz-meio:    #1C231D;
+    --cz-borda:   #2A3B2C;
+    --branco:     #E8F5E9;
+    --txt-sec:    #A5D6A7;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--preto);color:var(--branco);
+    font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%,rgba(46,125,50,.18) 0%,transparent 70%),
+      repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(46,125,50,.04) 39px,rgba(46,125,50,.04) 40px),
+      repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(46,125,50,.04) 39px,rgba(46,125,50,.04) 40px);
+  }
+
+  /* HEADER */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 2rem;height:68px;
+    background:rgba(10,10,10,.95);border-bottom:1px solid var(--cz-borda);
+    position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);
+  }
+  .logo-area{display:flex;align-items:center;gap:.9rem}
+  .logo-ifma{display:grid;grid-template-columns:repeat(3,9px);grid-template-rows:repeat(3,9px);gap:2px}
+  .logo-ifma span{display:block;background:var(--verde-c);border-radius:1px;animation:pg 3s ease-in-out infinite}
+  .logo-ifma span:nth-child(5){background:var(--vermelho)}
+  @keyframes pg{0%,100%{opacity:1}50%{opacity:.5}}
+  .logo-text h1{font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;line-height:1.1}
+  .logo-text p{font-size:.6rem;color:var(--txt-sec);letter-spacing:.08em;text-transform:uppercase}
+  .header-right{display:flex;align-items:center;gap:1.2rem}
+  .url-badge{font-family:'Share Tech Mono',monospace;font-size:.58rem;color:var(--azul);background:rgba(41,182,246,.08);border:1px solid rgba(41,182,246,.25);padding:.22rem .6rem;border-radius:2px;text-decoration:none}
+  .h-status{display:flex;align-items:center;gap:.4rem;font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--verde-n)}
+  .dot-live{width:7px;height:7px;background:var(--verde-n);border-radius:50%;animation:bk 1.2s ease-in-out infinite;box-shadow:0 0 6px var(--verde-n)}
+  @keyframes bk{0%,100%{opacity:1}50%{opacity:.2}}
+
+  /* HERO */
+  .hero{text-align:center;padding:3rem 2rem 1.5rem;position:relative}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(46,125,50,.12) 0%,transparent 70%);pointer-events:none}
+  .campus-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(46,125,50,.12);border:1px solid rgba(46,125,50,.4);padding:.32rem 1rem;border-radius:2px;font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--verde-n);letter-spacing:.1em;margin-bottom:1.2rem}
+  .hero h2{font-family:'Rajdhani',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;letter-spacing:.05em;text-transform:uppercase;line-height:1.1;margin-bottom:.6rem}
+  .hero h2 span{color:var(--verde-c)}
+  .hero p{font-size:.88rem;color:var(--txt-sec);max-width:500px;margin:0 auto 2rem;line-height:1.6;font-weight:300}
+
+  /* STATUS BAR */
+  .status-bar{display:flex;justify-content:center;gap:1px;margin:0 2rem 1.5rem;flex-wrap:wrap}
+  .si{flex:1;min-width:130px;max-width:210px;background:var(--cz-meio);border:1px solid var(--cz-borda);padding:.9rem 1.1rem;position:relative;overflow:hidden;transition:background .2s}
+  .si:hover{background:#1f2d21}
+  .si::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--verde-c)}
+  .si.al::before{background:var(--azul)}
+  .si-label{font-family:'Share Tech Mono',monospace;font-size:.58rem;color:var(--txt-sec);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem}
+  .si-value{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--branco);line-height:1}
+  .si-value.green{color:var(--verde-n)}
+  .si-value.blue{color:var(--azul);font-size:.85rem}
+
+  /* SECTION TITLE */
+  .stitle{font-family:'Rajdhani',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--txt-sec);padding:0 2rem;margin-bottom:.9rem;display:flex;align-items:center;gap:.7rem}
+  .stitle::after{content:'';flex:1;height:1px;background:var(--cz-borda)}
+
+  /* DEVICES GRID */
+  .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1px;margin:0 2rem 2rem;background:var(--cz-borda);border:1px solid var(--cz-borda)}
+  .dcard{background:var(--cz-meio);padding:1.1rem;position:relative;overflow:hidden;transition:background .2s}
+  .dcard:hover{background:#1f2d21}
+  .dcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(102,187,106,.3),transparent)}
+  .dcard .ico{font-size:1.5rem;margin-bottom:.5rem;display:block}
+  .dcard .dname{font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:600;letter-spacing:.04em;margin-bottom:.2rem}
+  .dcard .dinfo{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--txt-sec);margin-bottom:.5rem;line-height:1.5}
+  .dcard .dpin{font-family:'Share Tech Mono',monospace;font-size:.55rem;color:#4a6e4c;margin-bottom:.5rem}
+  .dst{display:inline-flex;align-items:center;gap:.3rem;font-size:.58rem;font-family:'Share Tech Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+  .dst .dot{width:5px;height:5px;border-radius:50%}
+  .online .dot{background:var(--verde-n);box-shadow:0 0 4px var(--verde-n);animation:bk 2s infinite}
+  .online{color:var(--verde-n)}
+  .alerta .dot{background:var(--laranja-ac);box-shadow:0 0 4px var(--laranja-ac)}
+  .alerta{color:var(--laranja-ac)}
+  .offline .dot{background:var(--verm-ac)}
+  .offline{color:var(--verm-ac)}
+
+  /* LED RGB INDICATOR */
+  .led-rgb{display:flex;gap:.4rem;margin-top:.5rem}
+  .led-dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,.1)}
+  .led-r{background:#EF5350}
+  .led-g{background:#66BB6A;box-shadow:0 0 6px #66BB6A}
+  .led-b{background:#29B6F6}
+
+  /* PORTA BADGE */
+  .pbadge{display:inline-block;background:rgba(46,125,50,.15);border:1px solid rgba(46,125,50,.3);border-radius:2px;padding:.1rem .4rem;font-family:'Share Tech Mono',monospace;font-size:.5rem;color:var(--verde-n);margin-right:.3rem;margin-bottom:.2rem}
+
+  /* NAT INFO */
+  .nat-info{margin:0 2rem 1.5rem;background:rgba(46,125,50,.07);border:1px solid rgba(46,125,50,.25);border-left:3px solid var(--verde-c);padding:.7rem 1.1rem;display:flex;gap:.9rem;align-items:center;flex-wrap:wrap}
+  .nat-info .tag{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--verde-n);letter-spacing:.1em;white-space:nowrap}
+  .nat-info .desc{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--txt-sec);line-height:1.6}
+  .nat-info .desc b{color:var(--branco)}
+  .nat-info .desc em{color:var(--verde-n);font-style:normal}
+
+  /* VERSÃO BANNER */
+  .vbanner{margin:0 2rem 2rem;background:rgba(41,182,246,.06);border:1px solid rgba(41,182,246,.2);border-left:3px solid var(--azul);padding:.9rem 1.1rem;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+  .vbanner .tag{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--azul);letter-spacing:.1em;white-space:nowrap}
+  .vbanner .desc{font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--txt-sec);line-height:1.6}
+  .vbanner .desc a{color:var(--azul);text-decoration:none}
+
+  /* NETWORK MAP */
+  .netsec{margin:0 2rem 2rem;background:var(--cz-meio);border:1px solid var(--cz-borda);padding:1.3rem;overflow-x:auto}
+  .netdiag{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;row-gap:.8rem;margin-top:.8rem;min-width:580px}
+  .nnode{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+  .nbox{background:var(--cz-esc);border:1px solid var(--cz-borda);padding:.5rem .9rem;font-family:'Share Tech Mono',monospace;font-size:.58rem;color:var(--txt-sec);text-align:center;min-width:80px}
+  .nbox strong{display:block;font-family:'Rajdhani',sans-serif;font-size:.8rem;color:var(--branco);letter-spacing:.05em;margin-bottom:.15rem}
+  .nbox.hl{border-color:var(--verde-c)}
+  .nbox.hl strong{color:var(--verde-n)}
+  .nbox.sv{border-color:var(--azul)}
+  .nbox.sv strong{color:var(--azul)}
+  .nbox.sbc{border-color:var(--amarelo)}
+  .nbox.sbc strong{color:var(--amarelo)}
+  .narr{font-family:'Share Tech Mono',monospace;font-size:.5rem;color:var(--cz-borda);display:flex;flex-direction:column;align-items:center;padding:0 .2rem;gap:.1rem}
+  .narr span{color:var(--verde-c);font-size:.9rem;line-height:1}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--cz-borda);padding:1.1rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  footer p{font-family:'Share Tech Mono',monospace;font-size:.58rem;color:#4a5e4b;letter-spacing:.08em;text-transform:uppercase}
+  footer p span{color:var(--verde-c)}
+
+  /* SCAN LINE */
+  body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:9999}
+
+  @media(max-width:600px){
+    header{padding:0 1rem}
+    .url-badge{display:none}
+    .hero{padding:2rem 1rem 1rem}
+    .status-bar,.dgrid,.netsec,.nat-info,.vbanner,.stitle{margin-left:1rem;margin-right:1rem}
+    footer{padding:1rem;flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-area">
+    <div class="logo-ifma">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+    <div class="logo-text">
+      <h1>Instituto Federal do Maranhão</h1>
+      <p>Campus Monte Castelo &nbsp;·&nbsp; Automação Industrial</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <a class="url-badge" href="https://ifma-automacao-packet-tracer.netlify.app/" target="_blank">ifma-automacao-packet-tracer.netlify.app</a>
+    <div class="h-status"><div class="dot-live"></div>ONLINE &nbsp;|&nbsp; <span id="clock">--:--:--</span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="campus-badge">▸ SERVIDOR DE CONTROLE &nbsp;·&nbsp; REDE DE AUTOMAÇÃO</div>
+  <h2>Centro de <span>Automação</span><br>Monte Castelo</h2>
+  <p>Monitoramento integrado dos dispositivos IoT — SBC, sensores, atuadores e câmera — via rede NAT/WAN com Frame Relay.</p>
+</section>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="si"><div class="si-label">IP Público (NAT)</div><div class="si-value" style="font-size:.95rem">200.0.0.10</div></div>
+  <div class="si"><div class="si-label">IP Local (Servidor)</div><div class="si-value" style="font-size:.95rem">10.0.0.10</div></div>
+  <div class="si"><div class="si-label">SBC0 (Controlador)</div><div class="si-value" style="font-size:.95rem">192.168.1.50</div></div>
+  <div class="si"><div class="si-label">Dispositivos IoT</div><div class="si-value green">9 / 9</div></div>
+  <div class="si al"><div class="si-label">Uptime</div><div class="si-value" style="font-size:.95rem" id="uptime">00:00:00</div></div>
+</div>
+
+<!-- NAT INFO -->
+<div class="nat-info">
+  <span class="tag">ℹ NAT INFO</span>
+  <span class="desc">
+    Clientes externos acessam <b>200.0.0.10</b> →
+    Router1 Static NAT → entrega em <em>10.0.0.10</em> (este servidor) &nbsp;|&nbsp;
+    SBC0 <b>192.168.1.50</b> → Router0 NAT Overload → WAN <b>200.0.0.1</b> →
+    Frame Relay DLCI 102↔201 → Site B
+  </span>
+</div>
+
+<!-- VERSÃO BANNER -->
+<div class="vbanner">
+  <span class="tag">🚀 VERSÃO 2</span>
+  <span class="desc">
+    Hospedado em servidor real via <a href="https://netlify.com" target="_blank">Netlify</a> —
+    acessível pelo browser do PC0 e SBC0 no Cisco Packet Tracer.
+    URL: <a href="https://ifma-automacao-packet-tracer.netlify.app/" target="_blank">ifma-automacao-packet-tracer.netlify.app</a> &nbsp;|&nbsp;
+    Repositório: <a href="https://github.com/ccfernandes600/ifma-smart-home-packet-tracer" target="_blank">GitHub ↗</a>
+  </span>
+</div>
+
+<!-- CONTROLADOR SBC -->
+<div class="stitle">Controlador Central</div>
+<div class="dgrid" style="grid-template-columns:1fr">
+  <div class="dcard" style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap">
+    <span class="ico">🖥️</span>
+    <div>
+      <div class="dname">SBC0 — Single Board Computer</div>
+      <div class="dinfo">IP: 192.168.1.50 &nbsp;|&nbsp; Gateway: 192.168.1.1 &nbsp;|&nbsp; Linguagem: Python 3</div>
+      <div class="dpin">
+        <span class="pbadge">D0 → Motion Sensor</span>
+        <span class="pbadge">D1 → Garage Door</span>
+        <span class="pbadge">D2 → Door</span>
+        <span class="pbadge">D3 → Window</span>
+        <span class="pbadge">D4 → Camera</span>
+        <span class="pbadge">D5 → Siren</span>
+        <span class="pbadge">D6 → LCD Display</span>
+        <span class="pbadge">D7 → LED R</span>
+        <span class="pbadge">D8 → LED G</span>
+        <span class="pbadge">D9 → LED B</span>
+      </div>
+      <div class="dst online"><span class="dot"></span>Operacional</div>
+    </div>
+  </div>
+</div>
+
+<!-- SENSORES -->
+<div class="stitle">Sensores</div>
+<div class="dgrid">
+
+  <div class="dcard">
+    <span class="ico">🔍</span>
+    <div class="dname">Motion Sensor SE</div>
+    <div class="dinfo">Sensor de movimento PIR<br>Detecta presença no ambiente</div>
+    <div class="dpin"><span class="pbadge">D0</span> digitalRead</div>
+    <div class="dst online"><span class="dot"></span>Monitorando</div>
+  </div>
+
+  <div class="dcard">
+    <span class="ico">📷</span>
+    <div class="dname">Webcam — Camera 01</div>
+    <div class="dinfo">Câmera de vigilância<br>Ativada por sensor de movimento</div>
+    <div class="dpin"><span class="pbadge">D4</span> customWrite/customRead</div>
+    <div class="dst online"><span class="dot"></span>Standby</div>
+  </div>
+
+</div>
+
+<!-- ATUADORES -->
+<div class="stitle">Atuadores</div>
+<div class="dgrid">
+
+  <div class="dcard">
+    <span class="ico">🚗</span>
+    <div class="dname">Garage Door — IoT3</div>
+    <div class="dinfo">Porta de garagem automática<br>Controle remoto via SBC0</div>
+    <div class="dpin"><span class="pbadge">D1</span> customWrite/customRead</div>
+    <div class="dst online"><span class="dot"></span>Fechada</div>
+  </div>
+
+  <div class="dcard">
+    <span class="ico">🚪</span>
+    <div class="dname">Door — IoT1</div>
+    <div class="dinfo">Porta de acesso principal<br>Controle remoto via SBC0</div>
+    <div class="dpin"><span class="pbadge">D2</span> customWrite/customRead</div>
+    <div class="dst online"><span class="dot"></span>Fechada</div>
+  </div>
+
+  <div class="dcard">
+    <span class="ico">🪟</span>
+    <div class="dname">Window — IoT2</div>
+    <div class="dinfo">Janela automatizada<br>Controle remoto via SBC0</div>
+    <div class="dpin"><span class="pbadge">D3</span> customWrite/customRead</div>
+    <div class="dst online"><span class="dot"></span>Fechada</div>
+  </div>
+
+  <div class="dcard">
+    <span class="ico">🔔</span>
+    <div class="dname">Siren — IoT8</div>
+    <div class="dinfo">Sirene de alarme<br>Ativada por sensor de movimento</div>
+    <div class="dpin"><span class="pbadge">D5</span> customWrite/customRead</div>
+    <div class="dst online"><span class="dot"></span>Desarmada</div>
+  </div>
+
+  <div class="dcard">
+    <span class="ico">📟</span>
+    <div class="dname">LCD Display — IoT0</div>
+    <div class="dinfo">Painel com duas linhas de texto<br>Exibe status em tempo real</div>
+    <div class="dpin"><span class="pbadge">D6</span> customWrite/customRead</div>
+    <div class="dst online"><span class="dot"></span>
+      <span id="lcd-status">MONITORAMENTO ATIVO</span>
+    </div>
+  </div>
+
+  <div class="dcard">
+    <span class="ico">💡</span>
+    <div class="dname">RGB LED — IoT4</div>
+    <div class="dinfo">LED RGB de sinalização<br>Verde=OK · Laranja=Atenção · Vermelho=Perigo</div>
+    <div class="dpin">
+      <span class="pbadge">D7</span>R &nbsp;
+      <span class="pbadge">D8</span>G &nbsp;
+      <span class="pbadge">D9</span>B &nbsp;
+      analogWrite
+    </div>
+    <div class="led-rgb">
+      <div class="led-dot led-r"></div>
+      <div class="led-dot led-g"></div>
+      <div class="led-dot led-b"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ESTAÇÕES -->
+<div class="stitle">Estações de Trabalho</div>
+<div class="dgrid">
+  <div class="dcard">
+    <span class="ico">🖥️</span>
+    <div class="dname">PC0 — Estação</div>
+    <div class="dinfo">192.168.1.10 &nbsp;/&nbsp; GW 192.168.1.1</div>
+    <div class="dst online"><span class="dot"></span>Online</div>
+  </div>
+</div>
+
+<!-- TOPOLOGIA -->
+<div class="stitle">Topologia de Rede</div>
+<div class="netsec">
+  <div class="netdiag">
+
+    <div class="nnode">
+      <div class="nbox sbc">
+        <strong>SBC0</strong>
+        192.168.1.50<br>Python 3
+      </div>
+    </div>
+    <div class="narr"><span>→</span></div>
+    <div class="nnode">
+      <div class="nbox hl">
+        <strong>PC0</strong>
+        192.168.1.10
+      </div>
+    </div>
+    <div class="narr"><span>→</span>LAN</div>
+    <div class="nnode">
+      <div class="nbox">
+        <strong>Switch0</strong>
+        2960-24TT
+      </div>
+    </div>
+    <div class="narr"><span>→</span></div>
+    <div class="nnode">
+      <div class="nbox hl">
+        <strong>Router0</strong>
+        NAT/PAT<br>200.0.0.1
+      </div>
+    </div>
+    <div class="narr"><span>→</span>FR</div>
+    <div class="nnode">
+      <div class="nbox">
+        <strong>Cloud-PT</strong>
+        Frame Relay<br>102↔201
+      </div>
+    </div>
+    <div class="narr"><span>→</span>FR</div>
+    <div class="nnode">
+      <div class="nbox hl">
+        <strong>Router1</strong>
+        NAT Static<br>200.0.0.2
+      </div>
+    </div>
+    <div class="narr"><span>→</span>LAN</div>
+    <div class="nnode">
+      <div class="nbox">
+        <strong>Switch2</strong>
+        2960-24TT
+      </div>
+    </div>
+    <div class="narr"><span>→</span></div>
+    <div class="nnode">
+      <div class="nbox sv">
+        <strong>Server0</strong>
+        10.0.0.10<br>pub:200.0.0.10
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>IFMA &nbsp;·&nbsp; <span>Campus Monte Castelo</span> &nbsp;·&nbsp; Automação Industrial</p>
+  <p>IP Público: <span>200.0.0.10</span> &nbsp;·&nbsp; Protocolos: <span>HTTP / DNS / ICMP</span></p>
+  <p>Hospedado em <span>Netlify</span> &nbsp;·&nbsp; Simulado no <span>Cisco Packet Tracer</span></p>
+  <p>Documentação: <a href="https://github.com/ccfernandes600/ifma-smart-home-packet-tracer" target="_blank" style="color:var(--verde-n);text-decoration:none">github.com/ccfernandes600/ifma-smart-home-packet-tracer</a></p>
+</footer>
+
+<script>
+  const URL_PUBLICA = 'https://ifma-automacao-packet-tracer.netlify.app/';
+
+  // Relógio
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.toLocaleTimeString('pt-BR', { hour12: false });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Uptime
+  let seconds = 0;
+  setInterval(() => {
+    seconds++;
+    const h = String(Math.floor(seconds/3600)).padStart(2,'0');
+    const m = String(Math.floor((seconds%3600)/60)).padStart(2,'0');
+    const s = String(seconds%60).padStart(2,'0');
+    document.getElementById('uptime').textContent = h+':'+m+':'+s;
+  }, 1000);
+
+  // LCD status rotativo
+  const lcdMsgs = [
+    'MONITORAMENTO ATIVO',
+    'ABERTO: GARAGE',
+    'SISTEMA: NORMAL',
+    'CAM: STANDBY',
+    'ALARME: DESARMADO'
+  ];
+  let lcdIdx = 0;
+  setInterval(() => {
+    lcdIdx = (lcdIdx + 1) % lcdMsgs.length;
+    document.getElementById('lcd-status').textContent = lcdMsgs[lcdIdx];
+  }, 3000);
+
+  // Status server
+  fetch(URL_PUBLICA, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
+</script>
+</body>
+</html>
