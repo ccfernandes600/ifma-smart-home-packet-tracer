@@ -1,5 +1,5 @@
-from gpio import * # Biblioteca para controle de entrada e saída [cite: 15]
-from time import * # Biblioteca para funções de tempo e log [cite: 23]
+from gpio import * # Biblioteca para controle de entrada e saída 
+from time import * # Biblioteca para funções de tempo e log 
 
 # --- 1. CONFIGURAÇÃO DE CORES (Escala 0-1023) ---
 RGB_VERDE    = (0,    900, 0)
@@ -24,15 +24,15 @@ LED_B      = 9  # D9: Canal Azul do LED RGB
 def aplicar_rgb(cor_tuple):
     """ Envia sinais PWM (0-1023) para as portas digitais do LED RGB """
     r, g, b = cor_tuple
-    analogWrite(LED_R, r)  # [cite: 15]
-    analogWrite(LED_G, g)  # [cite: 15]
-    analogWrite(LED_B, b)  # [cite: 15]
+    analogWrite(LED_R, r) 
+    analogWrite(LED_G, g)  
+    analogWrite(LED_B, b)  
 
 def ler_sensores():
     """ Lê e limpa os dados dos sensores para garantir lógica precisa """
-    mov = digitalRead(SENSOR_MOV) == HIGH  # Lê nível lógico 0 ou 1 [cite: 15]
+    mov = digitalRead(SENSOR_MOV) == HIGH  # Lê nível lógico 0 ou 1 
     
-    # Limpeza de strings (strip) para evitar erros de comparação no Packet Tracer [cite: 5, 15]
+    # Limpeza de strings (strip) para evitar erros de comparação no Packet Tracer 
     g_raw = customRead(GARAGEM).strip()
     j_raw = customRead(JANELA).strip()
     p_raw = customRead(PORTA).strip()
@@ -50,7 +50,7 @@ def ler_sensores():
 def processar_sistema(*args):
     """ Lógica centralizada com sincronização LCD + Terminal """
     movimento, abertura, setor = ler_sensores()
-    agora = ctime()  # Carimbo de tempo para o log do terminal [cite: 23]
+    agora = ctime()  # Carimbo de tempo para o log do terminal 
     
     # --- ESTADO 1: VERMELHO (ALERTA MÁXIMO) ---
     # Ativação: Acesso aberto + Movimento detectado
@@ -74,7 +74,7 @@ def processar_sistema(*args):
         
         # Atuadores
         customWrite(CAMERA, "1")
-        customWrite(SIRENE, "0")  # Sirene desligada no monitoramento [cite: 4]
+        customWrite(SIRENE, "0")  # Sirene desligada no monitoramento 
         aplicar_rgb(RGB_LARANJA)
         
         # Sincronização Redundante
@@ -99,25 +99,25 @@ def setup():
     """ Configura os modos das portas no início do programa """
     # Portas de Saída (Controle)
     for p in [CAMERA, SIRENE, LCD_PANEL, LED_R, LED_G, LED_B]:
-        pinMode(p, OUT)  # [cite: 15]
+        pinMode(p, OUT)  # 
     
     # Portas de Entrada (Leitura)
     for p in [SENSOR_MOV, GARAGEM, PORTA, JANELA]:
-        pinMode(p, IN)   # [cite: 15]
+        pinMode(p, IN)   # 
         
     print("[{}] Sistema Iniciado - Monitoramento Ativo.".format(ctime()))
     processar_sistema()
 
 def main():
     setup()
-    # Adição de interrupções para resposta instantânea a eventos [cite: 23]
+    # Adição de interrupções para resposta instantânea a eventos 
     add_event_detect(SENSOR_MOV, processar_sistema)
     add_event_detect(GARAGEM,    processar_sistema)
     add_event_detect(PORTA,      processar_sistema)
     add_event_detect(JANELA,     processar_sistema)
     
     while True:
-        sleep(1)  # Mantém o script rodando na MCU [cite: 23]
+        sleep(1)  # Mantém o script rodando na MCU 
 
 if __name__ == "__main__":
     main()
