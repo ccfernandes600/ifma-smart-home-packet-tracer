@@ -400,7 +400,9 @@ O desenvolvimento deste projeto foi realizado com o auxílio de múltiplas plata
 
 4. **Documentação iterativa**: Registrar cada tentativa facilitou a identificação do padrão de falha nas conexões analógicas.
 
-5. **Persistência técnica**: 40% do tempo em debugging levou à descoberta de uma incompatibilidade importante do Packet Tracer 9.0.0 com portas analógicas.
+5. **Persis
+
+6. **Papel da IA como ferramenta**: Embora todo o código Python tenha sido gerado por IA, a concepção, arquitetura e decisões estratégicas do projeto foram totalmente definidas pelo autor. A IA atuou como assistente de desenvolvimento, enquanto o controle e direção permaneceram humanos. Muitas escolhas técnicas foram debatidas com a IA para avaliar as melhores alternativas, mas o comando do projeto sempre esteve nas mãos do desenvolvedor.tência técnica**: 40% do tempo em debugging levou à descoberta de uma incompatibilidade importante do Packet Tracer 9.0.0 com portas analógicas.
 
 ---
     main()
