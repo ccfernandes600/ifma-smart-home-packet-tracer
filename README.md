@@ -158,7 +158,7 @@ ifma-smart-home-packet-tracer/
 
 ## 7. Como Reproduzir no Cisco Packet Tracer
 
-1. Abra o Cisco Packet Tracer (versão 8.x ou superior).
+1. Abra o Cisco Packet Tracer (versão 9.0.0 ou superior).
 2. Monte a topologia conforme o mapa de endereçamento da Seção 2.
 3. Configure NAT Overload no Router0 e NAT estático 1:1 no Router1.
 4. Configure o Frame Relay na Cloud-PT interligando Router0 e Router1.
@@ -170,7 +170,7 @@ ifma-smart-home-packet-tracer/
 
 ## 8. Tecnologias Utilizadas
 
-- Cisco Packet Tracer 8.x
+- Cisco Packet Tracer 9.0.0
 - Python (MicroPython para SBC/MCU no PT)
 - NAT Overload e NAT Estático 1:1
 - Frame Relay (Cloud-PT)
