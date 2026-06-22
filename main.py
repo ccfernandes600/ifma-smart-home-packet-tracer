@@ -1,10 +1,20 @@
-from gpio import * # Biblioteca para controle de entrada e saída 
-from time import * # Biblioteca para funções de tempo e log 
+from gpio import * # Biblioteca para controle de entrada e saída
+from time import * # Biblioteca para funções de tempo e log
 
-# --- 1. CONFIGURAÇÃO DE CORES (Escala 0-1023) ---
-RGB_VERDE    = (0,    900, 0)
-RGB_LARANJA  = (1023, 512, 0)
-RGB_VERMELHO = (1023, 0,   0)
+# --- 1. CONFIGURAÇÃO DE CORES (Escala PWM 0-1023) ---
+#
+# Sobre as escalas 0-255 e 0-1023:
+# Ambas medem a MESMA grandeza (intensidade PWM, de 0% a 100%). A unica
+# diferenca e a RESOLUCAO, ou seja, em quantos passos a faixa e dividida:
+#   - 0-255  = PWM de  8 bits =  256 niveis (2^8)
+#   - 0-1023 = PWM de 10 bits = 1024 niveis (2^10)
+# Como 1024 / 256 = 4, cada 1 passo da escala 0-255 equivale a um "slot"
+# de 4 unidades na escala 0-1023. Conversao: valor_1023 = valor_255 * 4.
+# (Analogia: a mesma parede medida em cm ou em mm — mesmo tamanho, mais
+#  precisao. Aqui usamos 0-1023, a "regua" de maior precisao.)
+RGB_VERDE    = (0,    900, 0)   # ~ (0,   224, 0) em 0-255
+RGB_LARANJA  = (1023, 512, 0)   # ~ (255, 128, 0) em 0-255
+RGB_VERMELHO = (1023, 0,   0)   # ~ (255, 0,   0) em 0-255
 
 # --- 2. MAPEAMENTO DE HARDWARE (D0 - D9) ---
 # Entradas (Sensores)
@@ -24,15 +34,15 @@ LED_B      = 9  # D9: Canal Azul do LED RGB
 def aplicar_rgb(cor_tuple):
     """ Envia sinais PWM (0-1023) para as portas digitais do LED RGB """
     r, g, b = cor_tuple
-    analogWrite(LED_R, r) 
-    analogWrite(LED_G, g)  
-    analogWrite(LED_B, b)  
+    analogWrite(LED_R, r)
+    analogWrite(LED_G, g)
+    analogWrite(LED_B, b)
 
 def ler_sensores():
     """ Lê e limpa os dados dos sensores para garantir lógica precisa """
-    mov = digitalRead(SENSOR_MOV) == HIGH  # Lê nível lógico 0 ou 1 
-    
-    # Limpeza de strings (strip) para evitar erros de comparação no Packet Tracer 
+    mov = digitalRead(SENSOR_MOV) == HIGH  # Lê nível lógico 0 ou 1
+
+    # Limpeza de strings (strip) para evitar erros de comparação no Packet Tracer
     g_raw = customRead(GARAGEM).strip()
     j_raw = customRead(JANELA).strip()
     p_raw = customRead(PORTA).strip()
@@ -50,7 +60,7 @@ def ler_sensores():
 def processar_sistema(*args):
     """ Lógica centralizada com sincronização LCD + Terminal """
     movimento, abertura, setor = ler_sensores()
-    agora = ctime()  # Carimbo de tempo para o log do terminal 
+    agora = ctime()  # Carimbo de tempo para o log do terminal
     
     # --- ESTADO 1: VERMELHO (ALERTA MÁXIMO) ---
     # Ativação: Acesso aberto + Movimento detectado
@@ -74,7 +84,7 @@ def processar_sistema(*args):
         
         # Atuadores
         customWrite(CAMERA, "1")
-        customWrite(SIRENE, "0")  # Sirene desligada no monitoramento 
+        customWrite(SIRENE, "0")  # Sirene desligada no monitoramento
         aplicar_rgb(RGB_LARANJA)
         
         # Sincronização Redundante
@@ -99,25 +109,25 @@ def setup():
     """ Configura os modos das portas no início do programa """
     # Portas de Saída (Controle)
     for p in [CAMERA, SIRENE, LCD_PANEL, LED_R, LED_G, LED_B]:
-        pinMode(p, OUT)  # 
+        pinMode(p, OUT)
     
     # Portas de Entrada (Leitura)
     for p in [SENSOR_MOV, GARAGEM, PORTA, JANELA]:
-        pinMode(p, IN)   # 
+        pinMode(p, IN)
         
     print("[{}] Sistema Iniciado - Monitoramento Ativo.".format(ctime()))
     processar_sistema()
 
 def main():
     setup()
-    # Adição de interrupções para resposta instantânea a eventos 
+    # Adição de interrupções para resposta instantânea a eventos
     add_event_detect(SENSOR_MOV, processar_sistema)
     add_event_detect(GARAGEM,    processar_sistema)
     add_event_detect(PORTA,      processar_sistema)
     add_event_detect(JANELA,     processar_sistema)
     
     while True:
-        sleep(1)  # Mantém o script rodando na MCU 
+        sleep(1)  # Mantém o script rodando no SBC
 
 if __name__ == "__main__":
     main()

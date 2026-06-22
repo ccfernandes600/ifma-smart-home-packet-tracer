@@ -1,0 +1,19 @@
+# Windows / WSL
+*.Zone.Identifier
+Thumbs.db
+Desktop.ini
+
+# Backups
+*_backup_*
+*.bak
+
+# Arquivos legados (preservados localmente)
+_legado/
+
+# Claude Code
+.claude/
+
+# OS
+.DS_Store
+*.swp
+*~

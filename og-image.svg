@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c3d22"/>
+      <stop offset="1" stop-color="#072a17"/>
+    </linearGradient>
+    <style>
+      .h1 { font-size:52px; font-weight:bold; fill:#ffffff; }
+      .h2 { font-size:24px; fill:#a5d6a7; }
+      .chip{ font-size:18px; font-weight:bold; fill:#0b7a3b; }
+      .chipbox{ fill:#dff5e8; rx:18; }
+      .card{ fill:#ffffff; rx:12; }
+      .cname{ font-size:19px; font-weight:bold; fill:#101010; }
+      .cip{ font-size:15px; fill:#0b7a3b; font-family:Consolas,monospace; }
+      .cdesc{ font-size:13px; fill:#5a6b60; }
+      .flow{ stroke:#66bb6a; stroke-width:3; fill:none; }
+      .ftxt{ font-size:15px; fill:#dff5e8; }
+      .foot{ font-size:16px; fill:#9fd0b1; font-family:Consolas,monospace; }
+    </style>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#66bb6a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="10" fill="#c62828"/>
+
+  <!-- Logo IFMA simplificado (grid 3x3) -->
+  <g transform="translate(60,58)">
+    <rect x="0"  y="0"  width="20" height="20" rx="2" fill="#43a047"/>
+    <rect x="26" y="0"  width="20" height="20" rx="2" fill="#43a047"/>
+    <rect x="52" y="0"  width="20" height="20" rx="2" fill="#43a047"/>
+    <rect x="0"  y="26" width="20" height="20" rx="2" fill="#43a047"/>
+    <rect x="26" y="26" width="20" height="20" rx="2" fill="#c62828"/>
+    <rect x="52" y="26" width="20" height="20" rx="2" fill="#43a047"/>
+    <rect x="0"  y="52" width="20" height="20" rx="2" fill="#43a047"/>
+    <rect x="26" y="52" width="20" height="20" rx="2" fill="#43a047"/>
+    <rect x="52" y="52" width="20" height="20" rx="2" fill="#43a047"/>
+  </g>
+
+  <text x="156" y="92" class="h1">IFMA · Automação IoT</text>
+  <text x="158" y="130" class="h2">Rede corporativa no Cisco Packet Tracer — NAT · Frame Relay · SBC com Python</text>
+
+  <!-- Chips de tecnologias -->
+  <g transform="translate(158,160)">
+    <rect class="chipbox" x="0"   y="0" width="150" height="36"/>
+    <text x="22" y="24" class="chip">NAT / PAT</text>
+    <rect class="chipbox" x="166" y="0" width="170" height="36"/>
+    <text x="186" y="24" class="chip">Frame Relay</text>
+    <rect class="chipbox" x="352" y="0" width="180" height="36"/>
+    <text x="372" y="24" class="chip">IoT + Python</text>
+    <rect class="chipbox" x="548" y="0" width="200" height="36"/>
+    <text x="568" y="24" class="chip">Portal Web Duplo</text>
+  </g>
+
+  <!-- ===== Mini-topologia: SITE A -> WAN -> SITE B ===== -->
+  <!-- SITE A -->
+  <rect class="card" x="60"  y="250" width="300" height="300"/>
+  <text x="80" y="284" class="cname" fill="#0b7a3b">SITE A · Automação</text>
+  <text x="80" y="306" class="cdesc">LAN 192.168.1.0/24</text>
+
+  <rect x="80" y="320" width="260" height="46" rx="8" fill="#f1faf4" stroke="#1fa55b"/>
+  <text x="94" y="340" class="cname" font-size="16">🔧 SBC IoT</text>
+  <text x="94" y="358" class="cip">192.168.1.20 · D0–D9</text>
+
+  <rect x="80" y="374" width="260" height="46" rx="8" fill="#f1faf4" stroke="#1fa55b"/>
+  <text x="94" y="394" class="cname" font-size="16">🌐 SBC Web</text>
+  <text x="94" y="412" class="cip">192.168.1.50 · portais</text>
+
+  <rect x="80" y="428" width="260" height="42" rx="8" fill="#f1faf4" stroke="#1fa55b"/>
+  <text x="94" y="455" class="cname" font-size="16">🖥️ PC0 · 192.168.1.10</text>
+
+  <rect x="80" y="478" width="260" height="50" rx="8" fill="#fff4f4" stroke="#c62828"/>
+  <text x="94" y="499" class="cname" font-size="16">📶 Router0 · NAT Overload</text>
+  <text x="94" y="518" class="cip" fill="#c62828">WAN 200.0.0.1</text>
+
+  <!-- WAN -->
+  <rect class="card" x="450" y="330" width="300" height="140" fill="#e3f2fd"/>
+  <text x="470" y="364" class="cname" fill="#1565C0">WAN · Frame Relay</text>
+  <text x="470" y="388" class="cip" fill="#1565C0">200.0.0.0/29</text>
+  <rect x="470" y="402" width="260" height="48" rx="8" fill="#ffffff" stroke="#1565C0"/>
+  <text x="484" y="422" class="cname" font-size="16">☁️ Cloud-PT</text>
+  <text x="484" y="440" class="cip" fill="#1565C0">DLCI 102 ↔ 201</text>
+
+  <!-- SITE B -->
+  <rect class="card" x="840" y="250" width="300" height="300"/>
+  <text x="860" y="284" class="cname" fill="#c62828">SITE B · Servidor</text>
+  <text x="860" y="306" class="cdesc">LAN 10.0.0.0/24</text>
+
+  <rect x="860" y="372" width="260" height="50" rx="8" fill="#fff4f4" stroke="#c62828"/>
+  <text x="874" y="393" class="cname" font-size="16">📶 Router1 · Static NAT</text>
+  <text x="874" y="412" class="cip" fill="#c62828">WAN 200.0.0.2</text>
+
+  <rect x="860" y="436" width="260" height="62" rx="8" fill="#e8f5e9" stroke="#2E7D32"/>
+  <text x="874" y="458" class="cname" font-size="16">🗄️ Server0</text>
+  <text x="874" y="476" class="cip">real 10.0.0.10</text>
+  <text x="874" y="492" class="cip" fill="#c62828">público 200.0.0.10</text>
+
+  <!-- setas de fluxo -->
+  <path class="flow" d="M360,400 L450,400" marker-end="url(#a)"/>
+  <path class="flow" d="M750,400 L840,400" marker-end="url(#a)"/>
+
+  <!-- rodapé -->
+  <text x="60" y="592" class="foot">github.com/ccfernandes600/ifma-smart-home-packet-tracer</text>
+  <text x="60" y="616" class="ftxt">IFMA · Campus Monte Castelo · 3 estados de segurança: 🟢 NORMAL · 🟠 MONITORAMENTO · 🔴 ALERTA</text>
+</svg>

@@ -6,8 +6,17 @@
 <title>IFMA — Sistema de Automação | Campus Monte Castelo</title>
 <meta name="description" content="Sistema de monitoramento da rede de automação IoT do IFMA Campus Monte Castelo.">
 <meta property="og:title" content="IFMA — Sistema de Automação | Campus Monte Castelo">
+<meta property="og:description" content="Rede corporativa com automação IoT no Cisco Packet Tracer: NAT, Frame Relay, SBC com Python e portal web duplo (interno + nuvem).">
 <meta property="og:url" content="https://ifma-automacao-packet-tracer.netlify.app/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://ifma-automacao-packet-tracer.netlify.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Topologia da rede de automação IoT do IFMA no Cisco Packet Tracer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IFMA — Sistema de Automação | Campus Monte Castelo">
+<meta name="twitter:description" content="Rede corporativa com automação IoT no Cisco Packet Tracer: NAT, Frame Relay, SBC com Python e portal web duplo.">
+<meta name="twitter:image" content="https://ifma-automacao-packet-tracer.netlify.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -188,7 +197,7 @@
 <div class="status-bar">
   <div class="si"><div class="si-label">IP Público (NAT)</div><div class="si-value" style="font-size:.95rem">200.0.0.10</div></div>
   <div class="si"><div class="si-label">IP Local (Servidor)</div><div class="si-value" style="font-size:.95rem">10.0.0.10</div></div>
-  <div class="si"><div class="si-label">SBC0 (Controlador)</div><div class="si-value" style="font-size:.95rem">192.168.1.50</div></div>
+  <div class="si"><div class="si-label">SBC IoT (Controlador)</div><div class="si-value" style="font-size:.95rem">192.168.1.20</div></div>
   <div class="si"><div class="si-label">Dispositivos IoT</div><div class="si-value green">9 / 9</div></div>
   <div class="si al"><div class="si-label">Uptime</div><div class="si-value" style="font-size:.95rem" id="uptime">00:00:00</div></div>
 </div>
@@ -199,30 +208,30 @@
   <span class="desc">
     Clientes externos acessam <b>200.0.0.10</b> →
     Router1 Static NAT → entrega em <em>10.0.0.10</em> (este servidor) &nbsp;|&nbsp;
-    SBC0 <b>192.168.1.50</b> → Router0 NAT Overload → WAN <b>200.0.0.1</b> →
+    SBC IoT <b>192.168.1.20</b> / SBC Web <b>192.168.1.50</b> → Router0 NAT Overload → WAN <b>200.0.0.1</b> →
     Frame Relay DLCI 102↔201 → Site B
   </span>
 </div>
 
 <!-- VERSÃO BANNER -->
 <div class="vbanner">
-  <span class="tag">🚀 VERSÃO 2</span>
+  <span class="tag">🚀 VERSÃO 3</span>
   <span class="desc">
     Hospedado em servidor real via <a href="https://netlify.com" target="_blank">Netlify</a> —
-    acessível pelo browser do PC0 e SBC0 no Cisco Packet Tracer.
+    acessível pelo browser do PC0 e do SBC Web no Cisco Packet Tracer.
     URL: <a href="https://ifma-automacao-packet-tracer.netlify.app/" target="_blank">ifma-automacao-packet-tracer.netlify.app</a> &nbsp;|&nbsp;
     Repositório: <a href="https://github.com/ccfernandes600/ifma-smart-home-packet-tracer" target="_blank">GitHub ↗</a>
   </span>
 </div>
 
 <!-- CONTROLADOR SBC -->
-<div class="stitle">Controlador Central</div>
+<div class="stitle">Controladores (SBC)</div>
 <div class="dgrid" style="grid-template-columns:1fr">
   <div class="dcard" style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap">
     <span class="ico">🖥️</span>
     <div>
-      <div class="dname">SBC0 — Single Board Computer</div>
-      <div class="dinfo">IP: 192.168.1.50 &nbsp;|&nbsp; Gateway: 192.168.1.1 &nbsp;|&nbsp; Linguagem: Python 3</div>
+      <div class="dname">SBC IoT — Single Board Computer</div>
+      <div class="dinfo">IP: 192.168.1.20 &nbsp;|&nbsp; Gateway: 192.168.1.1 &nbsp;|&nbsp; Linguagem: Python 3</div>
       <div class="dpin">
         <span class="pbadge">D0 → Motion Sensor</span>
         <span class="pbadge">D1 → Garage Door</span>
@@ -235,6 +244,15 @@
         <span class="pbadge">D8 → LED G</span>
         <span class="pbadge">D9 → LED B</span>
       </div>
+      <div class="dst online"><span class="dot"></span>Operacional</div>
+    </div>
+  </div>
+  <div class="dcard" style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap">
+    <span class="ico">🌐</span>
+    <div>
+      <div class="dname">SBC Web — Servidor de Portais</div>
+      <div class="dinfo">IP: 192.168.1.50 &nbsp;|&nbsp; Gateway: 192.168.1.1 &nbsp;|&nbsp; Função: proxy/entrega das páginas web</div>
+      <div class="dpin">Busca o portal hospedado no Netlify e o entrega ao PC0 dentro da LAN.</div>
       <div class="dst online"><span class="dot"></span>Operacional</div>
     </div>
   </div>
@@ -269,7 +287,7 @@
   <div class="dcard">
     <span class="ico">🚗</span>
     <div class="dname">Garage Door — IoT3</div>
-    <div class="dinfo">Porta de garagem automática<br>Controle remoto via SBC0</div>
+    <div class="dinfo">Porta de garagem automática<br>Controle remoto via SBC IoT</div>
     <div class="dpin"><span class="pbadge">D1</span> customWrite/customRead</div>
     <div class="dst online"><span class="dot"></span>Fechada</div>
   </div>
@@ -277,7 +295,7 @@
   <div class="dcard">
     <span class="ico">🚪</span>
     <div class="dname">Door — IoT1</div>
-    <div class="dinfo">Porta de acesso principal<br>Controle remoto via SBC0</div>
+    <div class="dinfo">Porta de acesso principal<br>Controle remoto via SBC IoT</div>
     <div class="dpin"><span class="pbadge">D2</span> customWrite/customRead</div>
     <div class="dst online"><span class="dot"></span>Fechada</div>
   </div>
@@ -285,7 +303,7 @@
   <div class="dcard">
     <span class="ico">🪟</span>
     <div class="dname">Window — IoT2</div>
-    <div class="dinfo">Janela automatizada<br>Controle remoto via SBC0</div>
+    <div class="dinfo">Janela automatizada<br>Controle remoto via SBC IoT</div>
     <div class="dpin"><span class="pbadge">D3</span> customWrite/customRead</div>
     <div class="dst online"><span class="dot"></span>Fechada</div>
   </div>
@@ -345,8 +363,8 @@
 
     <div class="nnode">
       <div class="nbox sbc">
-        <strong>SBC0</strong>
-        192.168.1.50<br>Python 3
+        <strong>SBC IoT</strong>
+        192.168.1.20<br>Python 3
       </div>
     </div>
     <div class="narr"><span>→</span></div>
@@ -411,8 +429,6 @@
 </footer>
 
 <script>
-  const URL_PUBLICA = 'https://ifma-automacao-packet-tracer.netlify.app/';
-
   // Relógio
   function updateClock() {
     const now = new Date();
@@ -432,22 +448,19 @@
     document.getElementById('uptime').textContent = h+':'+m+':'+s;
   }, 1000);
 
-  // LCD status rotativo
+  // LCD status rotativo — mensagens espelham os estados reais do main.py
   const lcdMsgs = [
-    'MONITORAMENTO ATIVO',
-    'ABERTO: GARAGE',
-    'SISTEMA: NORMAL',
-    'CAM: STANDBY',
-    'ALARME: DESARMADO'
+    'SISTEMA SEGURO · ESTADO NORMAL',
+    'MONITORAMENTO · MOV. DETECTADO',
+    'MONITORAMENTO · ABERTO: GARAGEM',
+    'ALERTA VIOLACAO · SETOR: PORTA',
+    'SISTEMA SEGURO · ESTADO NORMAL'
   ];
   let lcdIdx = 0;
   setInterval(() => {
     lcdIdx = (lcdIdx + 1) % lcdMsgs.length;
     document.getElementById('lcd-status').textContent = lcdMsgs[lcdIdx];
   }, 3000);
-
-  // Status server
-  fetch(URL_PUBLICA, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
 </script>
 </body>
 </html>

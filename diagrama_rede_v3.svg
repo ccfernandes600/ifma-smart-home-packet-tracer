@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" font-family="Segoe UI, Arial, sans-serif">
+  <!-- ===================== ESTILOS ===================== -->
+  <defs>
+    <style>
+      .site-a   { fill:#f1faf4; stroke:#0b7a3b; stroke-width:2; stroke-dasharray:8 5; }
+      .site-b   { fill:#fdf3f3; stroke:#c62828; stroke-width:2; stroke-dasharray:8 5; }
+      .wan-zone { fill:#eef6fd; stroke:#1565C0; stroke-width:2; stroke-dasharray:8 5; }
+      .node     { fill:#ffffff; stroke:#cfe7d7; stroke-width:1.5; rx:8; }
+      .node-host{ fill:#ffffff; stroke:#1fa55b; stroke-width:2; rx:8; }
+      .node-sw  { fill:#eef8f1; stroke:#9fd0b1; stroke-width:2; rx:8; }
+      .node-rt  { fill:#fff4f4; stroke:#c62828; stroke-width:2; rx:8; }
+      .node-cl  { fill:#e3f2fd; stroke:#1565C0; stroke-width:2; rx:8; }
+      .node-srv { fill:#e8f5e9; stroke:#2E7D32; stroke-width:2; rx:8; }
+      .title    { font-size:26px; font-weight:bold; fill:#101010; }
+      .subtitle { font-size:13px; fill:#5a6b60; }
+      .zone-lbl { font-size:14px; font-weight:bold; letter-spacing:.5px; }
+      .name     { font-size:15px; font-weight:bold; fill:#101010; }
+      .ip       { font-size:12px; fill:#0b7a3b; font-family:Consolas,monospace; }
+      .ip-r     { font-size:12px; fill:#c62828; font-family:Consolas,monospace; }
+      .ip-b     { font-size:12px; fill:#1565C0; font-family:Consolas,monospace; }
+      .desc     { font-size:11px; fill:#6b7a70; }
+      .link     { stroke:#9aa8a0; stroke-width:2.5; fill:none; }
+      .link-wan { stroke:#1565C0; stroke-width:2.5; fill:none; stroke-dasharray:6 4; }
+      .ltag     { font-size:10px; fill:#8a978f; font-family:Consolas,monospace; }
+    </style>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#9aa8a0"/>
+    </marker>
+    <marker id="arrowb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#1565C0"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== CABEÇALHO ===================== -->
+  <rect x="0" y="0" width="1200" height="62" fill="#0b7a3b"/>
+  <rect x="0" y="62" width="1200" height="5" fill="#c62828"/>
+  <text x="32" y="32" class="title" fill="#ffffff">IFMA — Topologia da Rede de Automação IoT</text>
+  <text x="32" y="52" class="subtitle" fill="#dff5e8">Cisco Packet Tracer · NAT · Frame Relay · SBC com Python · Campus Monte Castelo</text>
+
+  <!-- ===================== SITE A ===================== -->
+  <rect x="24" y="92" width="430" height="560" rx="12" class="site-a"/>
+  <text x="44" y="118" class="zone-lbl" fill="#0b7a3b">SITE A — REDE DE AUTOMAÇÃO · 192.168.1.0/24</text>
+
+  <!-- PC0 -->
+  <rect x="48" y="140" width="180" height="64" rx="8" class="node-host"/>
+  <text x="60" y="164" class="name">🖥️ PC0</text>
+  <text x="60" y="183" class="ip">192.168.1.10</text>
+  <text x="60" y="198" class="desc">Estação de trabalho</text>
+
+  <!-- SBC IoT -->
+  <rect x="250" y="140" width="180" height="64" rx="8" class="node-host"/>
+  <text x="262" y="164" class="name">🔧 SBC IoT</text>
+  <text x="262" y="183" class="ip">192.168.1.20</text>
+  <text x="262" y="198" class="desc">Controlador (D0–D9)</text>
+
+  <!-- SBC Web -->
+  <rect x="149" y="222" width="180" height="64" rx="8" class="node-host"/>
+  <text x="161" y="246" class="name">🌐 SBC Web</text>
+  <text x="161" y="265" class="ip">192.168.1.50</text>
+  <text x="161" y="280" class="desc">Servidor dos portais</text>
+
+  <!-- Switch0 -->
+  <rect x="149" y="312" width="180" height="56" rx="8" class="node-sw"/>
+  <text x="161" y="336" class="name">🔀 Switch0</text>
+  <text x="161" y="355" class="desc">2960-24TT</text>
+
+  <!-- Caixa dispositivos IoT -->
+  <rect x="48" y="396" width="382" height="232" rx="8" fill="#ffffff" stroke="#cfe7d7" stroke-width="1.5"/>
+  <text x="60" y="418" class="name" font-size="13">📟 Dispositivos IoT — ligados ao SBC IoT (D0–D9)</text>
+  <line x1="60" y1="426" x2="418" y2="426" stroke="#e3efe7" stroke-width="1"/>
+  <text x="60" y="450" class="desc" font-size="12">D0  🔍 Sensor de movimento (PIR)</text>
+  <text x="60" y="472" class="desc" font-size="12">D1  🚗 Porta de garagem</text>
+  <text x="60" y="494" class="desc" font-size="12">D2  🚪 Porta principal</text>
+  <text x="60" y="516" class="desc" font-size="12">D3  🪟 Janela</text>
+  <text x="60" y="538" class="desc" font-size="12">D4  📷 Câmera (webcam)</text>
+  <text x="240" y="450" class="desc" font-size="12">D5  🔔 Sirene</text>
+  <text x="240" y="472" class="desc" font-size="12">D6  🟩 LCD (2 linhas)</text>
+  <text x="240" y="494" class="desc" font-size="12">D7  🔴 LED RGB — R</text>
+  <text x="240" y="516" class="desc" font-size="12">D8  🟢 LED RGB — G</text>
+  <text x="240" y="538" class="desc" font-size="12">D9  🔵 LED RGB — B</text>
+  <text x="60" y="572" class="desc" font-size="11" fill="#0b7a3b">3 estados: 🟢 NORMAL · 🟠 MONITORAMENTO · 🔴 ALERTA</text>
+  <text x="60" y="592" class="desc" font-size="11" fill="#0b7a3b">Lógica em Python (main.py) · PWM 0–1023 no LED RGB</text>
+
+  <!-- ===================== ROTEADOR 0 ===================== -->
+  <rect x="500" y="150" width="200" height="78" rx="8" class="node-rt"/>
+  <text x="514" y="174" class="name">📶 Router0 (2911)</text>
+  <text x="514" y="193" class="ip">Gi0/0  192.168.1.1</text>
+  <text x="514" y="208" class="ip-r">Se0/3/0  200.0.0.1</text>
+  <text x="514" y="222" class="desc">NAT Overload (PAT)</text>
+
+  <!-- ===================== ZONA WAN ===================== -->
+  <rect x="478" y="262" width="244" height="200" rx="12" class="wan-zone"/>
+  <text x="498" y="288" class="zone-lbl" fill="#1565C0">WAN · FRAME RELAY · 200.0.0.0/29</text>
+
+  <!-- Cloud-PT -->
+  <rect x="500" y="312" width="200" height="78" rx="8" class="node-cl"/>
+  <text x="514" y="336" class="name">☁️ Cloud-PT</text>
+  <text x="514" y="356" class="ip-b">Frame Relay</text>
+  <text x="514" y="372" class="ip-b">DLCI 102 ↔ 201</text>
+
+  <!-- ===================== ROTEADOR 1 ===================== -->
+  <rect x="500" y="404" width="200" height="78" rx="8" class="node-rt"/>
+  <text x="514" y="428" class="name">📶 Router1 (2911)</text>
+  <text x="514" y="447" class="ip-r">Se0/3/0  200.0.0.2</text>
+  <text x="514" y="462" class="ip">Gi0/0  10.0.0.1</text>
+  <text x="514" y="476" class="desc">Static NAT 200.0.0.10→10.0.0.10</text>
+
+  <!-- ===================== SITE B ===================== -->
+  <rect x="746" y="92" width="430" height="560" rx="12" class="site-b"/>
+  <text x="766" y="118" class="zone-lbl" fill="#c62828">SITE B — SERVIDOR · 10.0.0.0/24</text>
+
+  <!-- Switch2 -->
+  <rect x="856" y="312" width="210" height="56" rx="8" class="node-sw"/>
+  <text x="868" y="336" class="name">🔀 Switch2</text>
+  <text x="868" y="355" class="desc">2960-24TT</text>
+
+  <!-- Server0 -->
+  <rect x="836" y="404" width="250" height="92" rx="8" class="node-srv"/>
+  <text x="850" y="430" class="name">🗄️ Server0</text>
+  <text x="850" y="450" class="ip">IP real:    10.0.0.10</text>
+  <text x="850" y="466" class="ip-r">IP público: 200.0.0.10</text>
+  <text x="850" y="484" class="desc">Servidor web (HTTP/DNS) + portal interno</text>
+
+  <!-- ===================== LINKS ===================== -->
+  <!-- PC0/SBC IoT -> Switch0 -->
+  <path class="link" d="M138,204 L138,300 L230,300 L230,312"/>
+  <path class="link" d="M340,204 L340,300 L248,300 L248,312"/>
+  <!-- SBC Web -> Switch0 -->
+  <path class="link" d="M239,286 L239,312" marker-end="url(#arrow)"/>
+  <!-- Switch0 -> Router0 -->
+  <path class="link" d="M329,338 L460,338 L460,189 L500,189" marker-end="url(#arrow)"/>
+  <text x="392" y="332" class="ltag">LAN</text>
+  <!-- Router0 -> Cloud (WAN) -->
+  <path class="link-wan" d="M600,228 L600,312" marker-end="url(#arrowb)"/>
+  <text x="608" y="250" class="ltag" fill="#1565C0">WAN</text>
+  <!-- Cloud -> Router1 (WAN) -->
+  <path class="link-wan" d="M600,390 L600,404" marker-end="url(#arrowb)"/>
+  <!-- Router1 -> Switch2 -->
+  <path class="link" d="M700,443 L780,443 L780,338 L856,338" marker-end="url(#arrow)"/>
+  <text x="792" y="332" class="ltag">LAN</text>
+  <!-- Switch2 -> Server0 -->
+  <path class="link" d="M961,368 L961,404" marker-end="url(#arrow)"/>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <text x="32" y="690" class="desc" font-size="12" fill="#5a6b60">
+    Fluxo externo: cliente → 200.0.0.10 (Static NAT no Router1) → 10.0.0.10 (Server0)
+    &#160;&#160;|&#160;&#160; Saída da automação: SBC → Router0 NAT Overload → 200.0.0.1 → Frame Relay → Site B
+  </text>
+  <text x="32" y="712" class="desc" font-size="12" fill="#5a6b60">
+    Portal externo hospedado no Netlify (ifma-automacao-packet-tracer.netlify.app), entregue na LAN pelo SBC Web.
+  </text>
+  <text x="32" y="744" class="subtitle" fill="#9aa8a0">github.com/ccfernandes600/ifma-smart-home-packet-tracer · IFMA Campus Monte Castelo</text>
+</svg>
