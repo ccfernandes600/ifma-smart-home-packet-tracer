@@ -7,7 +7,7 @@
 
 🏠🔐 **De um bug que consumiu 40% do projeto a um sistema de automação residencial funcionando: o que aprendi construindo redes no Cisco Packet Tracer.**
 
-Como professor de Introdução à Programação no IFMA – Campus Monte Castelo, gosto de levar para a sala projetos que unem teoria e prática real. Este é um deles.
+Como professor de **Introdução à Programação** e de **Técnicas de Programação aplicadas à Engenharia** no IFMA – Campus Monte Castelo. Gosto de levar para a sala projetos que unem teoria e prática real. Este é um deles.
 
 Desenvolvi uma **infraestrutura de rede corporativa completa** com automação residencial IoT, integrando dois sites via WAN. O resultado:
 
